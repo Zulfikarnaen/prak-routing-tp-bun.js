@@ -4,6 +4,11 @@ const server = Bun.serve({
         const url = new URL(request.url);
         const path = url.pathname; 
         const method = request.method;
+        const users = [
+            { id: "1", name: "Alice" },
+            { id: "2", name: "Bob" },
+            { id: "123", name: "Charlie" }
+            ];
         
         console.log(`[${new Date().toLocaleTimeString()}] ${method} ${path}`);
 	if (path === '/' && method === 'GET') {
@@ -24,6 +29,23 @@ const server = Bun.serve({
 			headers: { 'Content-Type': 'application/json' },
 		});
 	}
+    else if (path.startsWith("/users/") && method === "GET") {
+        const parts = path.split("/");
+        const id = parts[2];
+
+        const user = users.find(u => u.id === id);
+
+        if (user) {
+            return new Response(JSON.stringify(user), {
+            headers: { "Content-Type": "application/json" }
+            });
+        } else {
+            return new Response(JSON.stringify({ message: "User tidak ditemukan" }), {
+            status: 404,
+            headers: { "Content-Type": "application/json" }
+            });
+        }
+    }
 	else if (path === '/api/users' && method === 'POST') {
 		return new Response (JSON.stringify({ message: 'User berhasil dibuat (Bun)' }), {
 		status: 201,
