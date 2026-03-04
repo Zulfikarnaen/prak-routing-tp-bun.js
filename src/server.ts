@@ -30,6 +30,20 @@ const server = Bun.serve({
 		headers: { 'Content-Type': 'application/json' },
 		});
 	}
+    else if (path === '/api/products' && method === 'GET') {
+        return new Response (JSON.stringify([
+        { id: 1, name: 'Laptop' },
+        { id: 2, name: 'Mouse' }
+        ]), {
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+    else if (path === '/api/products' && method === 'POST') {
+		return new Response (JSON.stringify({ message: 'Products berhasil dibuat (Bun)' }), {
+		status: 201,
+		headers: { 'Content-Type': 'application/json' },
+		});
+	}
 	else {
 		return new Response('<h1> 404 Halaman Tidak Ditemukan (Bun)</h1>',
 {
