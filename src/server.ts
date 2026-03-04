@@ -1,5 +1,5 @@
 const server = Bun.serve({
-	port: 3000,
+	port: 3001,
 	fetch(request) {
         const url = new URL(request.url);
         const path = url.pathname; 
